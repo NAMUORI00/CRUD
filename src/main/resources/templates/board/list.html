@@ -1,0 +1,16 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" data-bs-theme="auto">
+  <head th:replace="fragments/common.html :: head('CRUD 게시판')">
+  </head>
+  <body>
+  <div th:replace="fragments/common.html :: menu(board)"></div>
+
+  <main>
+    <h2 style="text-align: center;">CRUD 게시판</h2>
+    <p style="text-align: center;">게시판 목록</p>
+  </main>
+  <div th:replace="fragments/table.html :: table"></div>
+
+  </body>
+</html>
+</html>

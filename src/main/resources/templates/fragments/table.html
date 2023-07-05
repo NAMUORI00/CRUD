@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" data-bs-theme="auto" th:fragment="table">
+<head>
+</head>
+<body>
+      <table class="table table-hover" style="margin: 1%; width: 98%;">
+        <thead>
+          <tr>
+            <th style="width: 10%; text-align: center;" scope="col">번호</th>
+            <th style="width: 50%; text-align: center;" scope="col">제목</th>
+            <th style="width: 20%; text-align: center;" scope="col">글쓴이</th>
+            <th style="width: 20%; text-align: center;" scope="col">작성일</th>
+          </tr>
+        </thead>
+        <tbody class="table-group-divider">
+          <tr>
+            <th style="text-align: center;" scope="row">1</th>
+            <td style="text-align: center;">Mark</td>
+            <td style="text-align: center;">Otto</td>
+            <td style="text-align: center;">@mdo</td>
+          </tr>
+          <tr>
+            <th style="text-align: center;" scope="row">2</th>
+            <td style="text-align: center;">Jacob</td>
+            <td style="text-align: center;">Thornton</td>
+            <td style="text-align: center;">@fat</td>
+          </tr>
+        </tbody>
+      </table>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+          <li class="page-item disabled">
+            <a class="page-link">Previous</a>
+          </li>
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#">Next</a>
+          </li>
+        </ul>
+      </nav>
+</body>
+</html>
