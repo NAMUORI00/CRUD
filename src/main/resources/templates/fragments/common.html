@@ -97,13 +97,13 @@
       <nav class="py-2 bg-body-tertiary border-bottom">
         <div class="container d-flex flex-wrap">
           <ul class="nav me-auto">
-            <li class="nav-item" th:classappend="${menu} == 'home'? 'active'"><a href="/index" class="nav-link link-body-emphasis px-2">Home</a></li>
-            <li class="nav-item" th:classappend="${menu} == 'board'? 'active'"><a href="/board" class="nav-link link-body-emphasis px-2">Board</a></li>
+            <li class="nav-item" th:classappend="${menu} == 'home'? 'active'"><a href="/index.html" th:href="@{/index}" class="nav-link link-body-emphasis px-2">Home</a></li>
+            <li class="nav-item" th:classappend="${menu} == 'board'? 'active'"><a href="/board.html" th:href="@{/board}" class="nav-link link-body-emphasis px-2">Board</a></li>
 
           </ul>
           <ul class="nav">
-            <li class="nav-item"><a href="/login.html" class="nav-link link-body-emphasis px-2">Login</a></li>
-            <li class="nav-item"><a href="/signup.html" class="nav-link link-body-emphasis px-2">Sign up</a></li>
+            <li class="nav-item"><a href="/login.html" th:href="@{/login}" class="nav-link link-body-emphasis px-2">Login</a></li>
+            <li class="nav-item"><a href="/signup.html" th:href="@{/signup}" class="nav-link link-body-emphasis px-2">Sign up</a></li>
           </ul>
         </div>
       </nav>
