@@ -2,7 +2,6 @@ package com.example.crud.controller;
 
 import com.example.crud.dto.Board;
 import com.example.crud.repository.UserRepository;
-import com.example.crud.repository.boardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,10 +17,11 @@ import java.util.List;
 public class boardController {
 
     @Autowired
-    private boardRepository BoardRepository;
+    private com.example.crud.repository.BoardRepository BoardRepository;
 
     @Autowired
     private UserRepository userRepository;
+
 
     @GetMapping({"/board", "/board/list"})
     public String board(Model model){
@@ -53,6 +53,12 @@ public class boardController {
     @PostMapping({"/form"})
     public String postForm(@ModelAttribute Board board) {
         BoardRepository.save(board);
+        return "redirect:/board/list";
+    }
+
+    @PostMapping({"/board/delete"})
+    public String delete(@RequestParam Long id) {
+        BoardRepository.deleteById(id);
         return "redirect:/board/list";
     }
 
