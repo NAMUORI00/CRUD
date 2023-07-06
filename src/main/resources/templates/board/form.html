@@ -9,25 +9,27 @@
     <p style="text-align: center;">글쓰기</p>
   </main>
 
-  <form style="width: 80; margin-right: 10%; margin-left: 10%;">
+  <form style="width: 80; margin-right: 10%; margin-left: 10%;" action="#" th:action="@{/form}" th:object="${board}" method="post">
     <div class="mb-3">
-      <label for="exampleFormControlInput1" class="form-label">제목</label>
-      <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="제목">
+      <input type="hidden" th:field="*{id}">
+      <input type="hidden" th:field="*{created_at}">
+      <label for="title" class="form-label">제목</label>
+      <input type="text" class="form-control" id="title" placeholder="제목" th:field="*{title}">
     </div>
     <div class="mb-3">
-      <label for="exampleFormControlInput1" class="form-label">작성자 아이디</label>
-      <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="작성자아이디값">
+      <label for="author_id" class="form-label">작성자 아이디</label>
+      <input class="form-control" id="author_id" placeholder="작성자아이디값" th:field="*{author_id}">
     </div>
     <div class="mb-3">
-      <label for="exampleFormControlTextarea1" class="form-label">내용</label>
-      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+      <label for="content" class="form-label">내용</label>
+      <textarea class="form-control" id="content" rows="3" th:field="*{content}"></textarea>
     </div>
-    <submit type="submit" class="btn btn-primary">글쓰기</submit>
+
+    <!-- 취소 버튼 -->
+    <a href="/board/list" class="btn btn-primary">취소</a>
+    <button type="submit" class="btn btn-primary">확인</button>
   </form>
 
-  <!-- boot strap-->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
 </html>

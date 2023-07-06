@@ -17,12 +17,16 @@
           <tr th:each="board, i : ${boards}">
 <!--            <th style="text-align: center;" scope="row">1</th>-->
             <td th:text="${board.id}" style="text-align: center;">1</td>
-            <td th:text="${board.title}" style="text-align: center;">Mark</td>
+            <td> <a th:text="${board.title}" th:href="@{/form(id=${board.id})}" style="text-align: center;">Mark</a></td>
             <td th:text="${nicknames[i.index]}" style="text-align: center;">Otto</td>
             <td th:text="${board.created_at}" style="text-align: center;">@mdo</td>
           </tr>
         </tbody>
       </table>
+
+      <!-- 글쓰기 버튼-->
+      <div style="text-align: right; margin-right: 2%">
+          <a href="/form" class="btn btn-primary">글쓰기</a>
 
       <!-- Pagination -->
       <nav aria-label="Page navigation example">
@@ -38,5 +42,6 @@
           </li>
         </ul>
       </nav>
+
 </body>
 </html>
