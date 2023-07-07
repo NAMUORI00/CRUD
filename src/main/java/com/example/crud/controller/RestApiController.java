@@ -1,10 +1,12 @@
 package com.example.crud.controller;
 
-import com.example.crud.dto.Board;
+import com.example.crud.Dto.BoardDto;
+import com.example.crud.model.Board;
 import com.example.crud.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -42,6 +44,25 @@ public class RestApiController {
                     newBoard.setId(id);
                     return boardRepository.save(newBoard);
                 });
+    }
+
+    @GetMapping("/test/board/get")
+    public List<BoardDto> testBoardList() {
+        List<BoardDto> boardDtoList =  new ArrayList<>();
+        List<Board> boards = boardRepository.findAll();
+
+        boards.forEach(board -> {
+            BoardDto boardDto = new BoardDto();
+            boardDto.setId(board.getId());
+            boardDto.setTitle(board.getTitle());
+            boardDto.setContent(board.getContent());
+            boardDto.setNickname(board.getAuthor().getNickname());
+            boardDto.setCreated_at(board.getCreated_at());
+            boardDto.setUpdated_at(board.getUpdated_at());
+            boardDtoList.add(boardDto);
+        });
+
+        return boardDtoList;
     }
 
 }

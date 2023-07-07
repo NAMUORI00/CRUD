@@ -4,6 +4,10 @@ import com.example.crud.Dto.BoardDto;
 import com.example.crud.model.Board;
 import com.example.crud.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,12 +29,14 @@ public class boardController {
 
 
     @GetMapping({"/board", "/board/list"})
-    public String board(Model model){
+    public String board(Model model,
+                        @PageableDefault(size=10, sort="id", direction = Sort.Direction.DESC) Pageable pageable
+    ) {
 
         List<BoardDto> boardDtoList =  new ArrayList<>();
-        List<Board> boards = boardRepository.findAll();
+        Page<Board> boards = boardRepository.findAll(pageable);
 
-        boards.forEach(board -> {
+        boards.getContent().forEach(board -> {
             BoardDto boardDto = new BoardDto();
             boardDto.setId(board.getId());
             boardDto.setTitle(board.getTitle());
@@ -41,6 +47,11 @@ public class boardController {
             boardDtoList.add(boardDto);
         });
 
+        int startpage = Math.max(0, boards.getPageable().getPageNumber() - 1);
+        int endtpage = Math.min(boards.getTotalPages(), boards.getTotalPages() + 4);
+        model.addAttribute("startPage", startpage);
+        model.addAttribute("endPage", endtpage);
+        model.addAttribute("board_p", boards);
         model.addAttribute("boards", boardDtoList);
 
         return "board/list";
