@@ -1,4 +1,4 @@
-package com.example.crud.dto;
+package com.example.crud.model;
 
 import jakarta.persistence.*;
 import lombok.Data;

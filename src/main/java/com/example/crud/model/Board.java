@@ -1,4 +1,4 @@
-package com.example.crud.dto;
+package com.example.crud.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -33,10 +33,8 @@ public class Board {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id", referencedColumnName = "id", insertable = false, updatable = false)
-    @JsonIgnore
     private Users author;
 
     @OneToMany(mappedBy = "board")
-    @JsonIgnore
     private List<Comments> comments;
 }

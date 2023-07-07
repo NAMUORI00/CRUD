@@ -1,6 +1,7 @@
 package com.example.crud.controller;
 
-import com.example.crud.dto.Board;
+import com.example.crud.Dto.BoardDto;
+import com.example.crud.model.Board;
 import com.example.crud.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,7 +18,7 @@ import java.util.List;
 public class boardController {
 
     @Autowired
-    private com.example.crud.repository.BoardRepository BoardRepository;
+    private com.example.crud.repository.BoardRepository boardRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -25,16 +26,22 @@ public class boardController {
 
     @GetMapping({"/board", "/board/list"})
     public String board(Model model){
-        List<Board> boards = BoardRepository.findAll();
 
-        List<String> nicknames = new ArrayList<>();  // 작성자 닉네임을 저장할 리스트
-        for (Board board : boards) {
-            String nickname = board.getAuthor().getNickname();  // 작성자의 닉네임 정보를 가져옴
-            nicknames.add(nickname);  // 작성자의 닉네임을 리스트에 추가
-        }
+        List<BoardDto> boardDtoList =  new ArrayList<>();
+        List<Board> boards = boardRepository.findAll();
 
-        model.addAttribute("boards", boards);
-        model.addAttribute("nicknames", nicknames);  // 작성자 닉네임 리스트를 모델에 추가
+        boards.forEach(board -> {
+            BoardDto boardDto = new BoardDto();
+            boardDto.setId(board.getId());
+            boardDto.setTitle(board.getTitle());
+            boardDto.setContent(board.getContent());
+            boardDto.setNickname(board.getAuthor().getNickname());
+            boardDto.setCreated_at(board.getCreated_at());
+            boardDto.setUpdated_at(board.getUpdated_at());
+            boardDtoList.add(boardDto);
+        });
+
+        model.addAttribute("boards", boardDtoList);
 
         return "board/list";
     }
@@ -44,7 +51,7 @@ public class boardController {
         if (id == null){
             model.addAttribute("board", new Board());
         }else {
-            Board board = BoardRepository.findById(id).orElse(null);
+            Board board = boardRepository.findById(id).orElse(null);
             model.addAttribute("board", board);
         }
         return "board/form";
@@ -52,13 +59,13 @@ public class boardController {
 
     @PostMapping({"/form"})
     public String postForm(@ModelAttribute Board board) {
-        BoardRepository.save(board);
+        boardRepository.save(board);
         return "redirect:/board/list";
     }
 
     @PostMapping({"/board/delete"})
     public String delete(@RequestParam Long id) {
-        BoardRepository.deleteById(id);
+        boardRepository.deleteById(id);
         return "redirect:/board/list";
     }
 
