@@ -30,11 +30,13 @@ public class boardController {
 
     @GetMapping({"/board", "/board/list"})
     public String board(Model model,
-                        @PageableDefault(size=10, sort="id", direction = Sort.Direction.DESC) Pageable pageable
+                        @PageableDefault(size=10, sort="id", direction = Sort.Direction.DESC) Pageable pageable,
+                        @RequestParam(required = false, defaultValue = "") String keyword
     ) {
 
         List<BoardDto> boardDtoList =  new ArrayList<>();
-        Page<Board> boards = boardRepository.findAll(pageable);
+//        Page<Board> boards = boardRepository.findAll(pageable);
+        Page<Board> boards = boardRepository.findAllByTitleContainingOrContentContaining(keyword, keyword, pageable);
 
         boards.getContent().forEach(board -> {
             BoardDto boardDto = new BoardDto();
