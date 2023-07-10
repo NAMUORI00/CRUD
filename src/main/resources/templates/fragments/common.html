@@ -111,8 +111,8 @@
             <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
             <span class="fs-4">나무오리씨의 CURD 프로젝트</span>
           </a>
-          <form class="col-12 col-lg-auto mb-3 mb-lg-0" role="search" method="get", th:accept="@{/board/list}">
-            <input type="search" class="form-control" placeholder="Search..." aria-label="Search", name="keyword">
+          <form class="col-12 col-lg-auto mb-3 mb-lg-0" role="search" method="get", th:action="@{/board/list}">
+            <input type="search" class="form-control" placeholder="Search..." aria-label="Search", name="keyword" th:value="${param.keyword}">
           </form>
         </div>
       </header>
