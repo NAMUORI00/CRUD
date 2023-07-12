@@ -104,7 +104,8 @@
             <li class="nav-item"><a href="/signup.html" th:href="@{/account/register}" class="nav-link link-body-emphasis px-2">Sign up</a></li>
           </ul>
           <ul sec:authorize="isAuthenticated()" class="nav">
-            <li class="nav-item"><a href="/login.html" class="nav-link link-body-emphasis px-2" >Name</a></li>
+            <li class="nav-item"><a  class="nav-link link-body-emphasis px-2" sec:authentication="name" >Name</a></li>
+            <li class="nav-item"><a  class="nav-link link-body-emphasis px-2" sec:authentication="principal.authorities" >Name</a></li>
             <form class="col-12 col-lg-auto mb-3 mb-lg-0" role="search" method="post", th:action="@{/logout}">
               <button type="submit" class="btn btn-primary">로그아웃</button>
             </form>

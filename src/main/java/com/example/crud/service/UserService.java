@@ -22,8 +22,6 @@ public class UserService {
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
         user.setEnabled(true);
-        user.setEmail("text@example.com");
-        user.setNickname("text");
 
         Role role = new Role();
         role.setId(1l);
