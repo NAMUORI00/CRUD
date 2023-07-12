@@ -1,5 +1,5 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en" data-bs-theme="auto">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en" data-bs-theme="auto">
   <head th:fragment="head(title)">
     <title th:text="${title}">CRUD Project</title>
     <meta charset="utf-8">
@@ -99,9 +99,15 @@
             <li class="nav-item" th:classappend="${menu} == 'board'? 'active'"><a href="/board.html" th:href="@{/board}" class="nav-link link-body-emphasis px-2">Board</a></li>
 
           </ul>
-          <ul class="nav">
-            <li class="nav-item"><a href="/login.html" th:href="@{/login}" class="nav-link link-body-emphasis px-2">Login</a></li>
-            <li class="nav-item"><a href="/signup.html" th:href="@{/signup}" class="nav-link link-body-emphasis px-2">Sign up</a></li>
+          <ul sec:authorize="!isAuthenticated()" class="nav">
+            <li class="nav-item"><a href="/login.html" th:href="@{/account/login}" class="nav-link link-body-emphasis px-2" >Login</a></li>
+            <li class="nav-item"><a href="/signup.html" th:href="@{/account/register}" class="nav-link link-body-emphasis px-2">Sign up</a></li>
+          </ul>
+          <ul sec:authorize="isAuthenticated()" class="nav">
+            <li class="nav-item"><a href="/login.html" class="nav-link link-body-emphasis px-2" >Name</a></li>
+            <form class="col-12 col-lg-auto mb-3 mb-lg-0" role="search" method="post", th:action="@{/logout}">
+              <button type="submit" class="btn btn-primary">로그아웃</button>
+            </form>
           </ul>
         </div>
       </nav>
