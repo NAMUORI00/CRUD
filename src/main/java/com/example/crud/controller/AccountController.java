@@ -12,14 +12,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/account")
 public class AccountController {
 
+    // 유저서비스 기능
     @Autowired
     private UserService userService;
 
+    // 로그인 페이지
     @GetMapping("/login")
     public String login() {
         return "account/login";
     }
 
+    // 회원가입
     @PostMapping("/register")
     public String register(Users users) {
         userService.save(users);
@@ -27,6 +30,7 @@ public class AccountController {
         return "redirect:/";
     }
 
+    // 회원가입 페이지
     @GetMapping("/register")
     public String getregister(Users users) {
         return "account/register";

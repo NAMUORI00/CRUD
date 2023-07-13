@@ -18,6 +18,7 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    // 회원가입
     public Users save(Users user) {
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);

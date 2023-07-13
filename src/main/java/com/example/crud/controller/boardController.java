@@ -3,6 +3,8 @@ package com.example.crud.controller;
 import com.example.crud.Dto.BoardDto;
 import com.example.crud.model.Board;
 import com.example.crud.repository.UserRepository;
+import com.example.crud.vailidator.BoardValidator;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +28,9 @@ public class boardController {
     private com.example.crud.repository.BoardRepository boardRepository;
 
     @Autowired
+    private BoardValidator boardValidator;
+
+    @Autowired
     private UserRepository userRepository;
 
 
@@ -35,9 +41,9 @@ public class boardController {
     ) {
 
         List<BoardDto> boardDtoList =  new ArrayList<>();
-//        Page<Board> boards = boardRepository.findAll(pageable);
         Page<Board> boards = boardRepository.findAllByTitleContainingOrContentContaining(keyword, keyword, pageable);
 
+        // boards to boardDtoList
         boards.getContent().forEach(board -> {
             BoardDto boardDto = new BoardDto();
             boardDto.setId(board.getId());
@@ -71,7 +77,11 @@ public class boardController {
     }
 
     @PostMapping({"/form"})
-    public String postForm(@ModelAttribute Board board) {
+    public String postForm(@Valid Board board, BindingResult bindingResult){
+        boardValidator.validate(board, bindingResult);
+        if (bindingResult.hasErrors()){
+            return "board/form";
+        }
         boardRepository.save(board);
         return "redirect:/board/list";
     }
