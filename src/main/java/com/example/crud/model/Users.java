@@ -12,7 +12,7 @@ import java.util.List;
 public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private long id;
     private String username;
     private String password;
     private String email;
@@ -32,10 +32,10 @@ public class Users {
         updated_at = LocalDateTime.now();
     }
 
-    @OneToMany(mappedBy = "author")
+    @OneToMany(mappedBy = "board_author" )
     private List<Board> boards;
 
-    @OneToMany(mappedBy = "author")
+    @OneToMany(mappedBy = "comments_author")
     private List<Comments> comments;
 
     @ManyToMany

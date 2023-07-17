@@ -3,6 +3,7 @@ package com.example.crud.controller;
 import com.example.crud.Dto.BoardDto;
 import com.example.crud.model.Board;
 import com.example.crud.repository.UserRepository;
+import com.example.crud.service.BoardService;
 import com.example.crud.vailidator.BoardValidator;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.net.Authenticator;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +37,8 @@ public class boardController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private BoardService boardService;
 
     @GetMapping({"/board", "/board/list"})
     public String board(Model model,
@@ -49,7 +55,7 @@ public class boardController {
             boardDto.setId(board.getId());
             boardDto.setTitle(board.getTitle());
             boardDto.setContent(board.getContent());
-            boardDto.setNickname(board.getAuthor().getNickname());
+            boardDto.setNickname(board.getBoard_author().getNickname());
             boardDto.setCreated_at(board.getCreated_at());
             boardDto.setUpdated_at(board.getUpdated_at());
             boardDtoList.add(boardDto);
@@ -77,12 +83,13 @@ public class boardController {
     }
 
     @PostMapping({"/form"})
-    public String postForm(@Valid Board board, BindingResult bindingResult){
+    public String postForm(@Valid Board board, BindingResult bindingResult, Authentication authentication){
         boardValidator.validate(board, bindingResult);
         if (bindingResult.hasErrors()){
             return "board/form";
         }
-        boardRepository.save(board);
+        String username = authentication.getName();
+        boardService.save(username, board);
         return "redirect:/board/list";
     }
 

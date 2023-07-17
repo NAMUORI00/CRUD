@@ -56,7 +56,7 @@ public class RestApiController {
             boardDto.setId(board.getId());
             boardDto.setTitle(board.getTitle());
             boardDto.setContent(board.getContent());
-            boardDto.setNickname(board.getAuthor().getNickname());
+            boardDto.setNickname(board.getBoard_author().getNickname());
             boardDto.setCreated_at(board.getCreated_at());
             boardDto.setUpdated_at(board.getUpdated_at());
             boardDtoList.add(boardDto);

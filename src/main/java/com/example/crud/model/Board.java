@@ -21,7 +21,6 @@ public class Board {
     @Size(min=2, max=30, message = "제목은 2자 이상 30자 이하입니다.")
     private String title;
     private String content;
-    private long author_id;
     private LocalDateTime created_at; // 생성일시
     private LocalDateTime updated_at; // 수정일시
 
@@ -38,8 +37,8 @@ public class Board {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "author_id", referencedColumnName = "id", insertable = false, updatable = false)
-    private Users author;
+    @JoinColumn(name = "author_id", referencedColumnName = "id")
+    private Users board_author;
 
     @OneToMany(mappedBy = "board") // 일대다 관계 board 이름으로 테이블 매핑
     private List<Comments> comments;
