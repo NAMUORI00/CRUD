@@ -72,7 +72,7 @@ public class boardController {
     }
 
     @GetMapping({"/form"})
-    public String form(Model model, @RequestParam(required = false) Long id) {
+    public String form(Model model, @RequestParam(required = false) Long id, Authentication authentication) {
         if (id == null){
             model.addAttribute("board", new Board());
         }else {
@@ -88,9 +88,13 @@ public class boardController {
         if (bindingResult.hasErrors()){
             return "board/form";
         }
-        String username = authentication.getName();
-        boardService.save(username, board);
-        return "redirect:/board/list";
+        if(authentication.isAuthenticated()){
+            String username = authentication.getName();
+            boardService.save(username, board);
+            return "redirect:/board/list";
+        } else{
+            return "redirect:/login";
+        }
     }
 
     @PostMapping({"/board/delete"})
